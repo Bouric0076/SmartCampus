@@ -5,7 +5,7 @@ from admins.models import Course, Unit
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reg_no = models.CharField(max_length=20, unique=True)
-    unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
+    Course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
     profile_pic= models.ImageField(upload_to='student/', default='student/default.jpg', blank=True, null=True)

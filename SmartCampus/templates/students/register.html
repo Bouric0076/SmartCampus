@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration</title>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <!-- Normalize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+    <!-- Your custom styles (if needed, you can keep local ones or switch to CDN) -->
+    <!-- Remove this line if you want to rely only on CDN styles -->
+    <!-- <link rel="stylesheet" href="{% static 'students/css/main.css' %}"> -->
+    <!-- <link rel="stylesheet" href="{% static 'students/css/hover.css' %}"> -->
+    
+    <!-- Alternatively, you can host your custom CSS files on CDN or skip entirely -->
+</head>
+<body>
+    <div class="container">
+        <h1>Student Registration</h1>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="First Name" required class="form-control mb-2" />
+            <input type="text" name="last_name" placeholder="Last Name" required class="form-control mb-2" />
+            <input type="text" name="username" placeholder="Username" required class="form-control mb-2" />
+            <input type="text" name="reg_no" placeholder="Registration No" required class="form-control mb-2" />
+            <input type="password" name="password" placeholder="Password" required class="form-control mb-2" />
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required class="form-control mb-2" />
+            <input type="number" name="phone_number" placeholder="Phone Number" required class="form-control mb-2" />
+            <input type="date" name="date_of_birth" placeholder="Date of Birth (YYYYMMDD)" required class="form-control mb-2" />
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+    
+    <!-- JavaScript Files from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add other JS libraries from CDN as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/modernizr@2.8.3/dist/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-counterup@2.1.0/jquery.counterup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mixitup/dist/mixitup.min.js"></script>
+</body>
+</html>
