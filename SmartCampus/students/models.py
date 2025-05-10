@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    reg_no = models.CharField(max_length=20 unique=True)
-    year_of_study = models.PositiveIntegerField()
+    reg_no = models.CharField(max_length=20, unique=True)
     Department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
+    profile_pic= models.ImageField(upload_to='students/', default=students/default.jpg, blank=True, null=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.reg_no}"
@@ -16,7 +17,8 @@ class StudentProfile(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=100 unique=True)
+    name = models.CharField(max_length=100, unique=True)
+    code = models.CharField(max_length=10, unique=True)
     head_of_department = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
 
