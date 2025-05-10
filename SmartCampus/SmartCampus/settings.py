@@ -74,13 +74,21 @@ WSGI_APPLICATION = 'SmartCampus.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Smartcampus',  # Your database name
+        'USER': 'root',             # Your MySQL username
+        'PASSWORD': 'Sandraenos2005',# Your MySQL password
+        'HOST': '127.0.0.1',        # Database server address
+        'PORT': '3306',             # MySQL default port
+        'OPTIONS': {
+            'charset': 'utf8mb4',  # Use utf8mb4 to support emojis
+        },
     }
 }
+pbd-aznq-mhm
+
 
 
 # Password validation

@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from admins.models import Course, Unit
 # Create your models here.
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    reg_no = models.CharField(max_length=20 unique=True)
+    reg_no = models.CharField(max_length=20, unique=True)
     year_of_study = models.PositiveIntegerField()
-    Department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
+    Course = models.ForeignKey('Course', on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
 
@@ -15,10 +15,38 @@ class StudentProfile(models.Model):
 
 
 
-class Department(models.Model):
-    name = models.CharField(max_length=100 unique=True)
-    head_of_department = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=15)
+class Enrollment(models.Model):
+    student = models.ForeignKey('StudentProfile', on_delete=models.CASCADE)
+    Unit = models.ForeignKey('Unit', on_delete=models.CASCADE)
+    class Meta:
+        unique_together =('student','unit')
+    def __str__(self):
+        return f"{self.student} - {self.unit}"
+    
+class FeePayment(models.Model):
+    student = models.ForeignKey('StudentProfile', on_delete=models.CASCADE)
+    amount_paid = models.DecimalField(max_digits=7, decimal_places=2)
+    payment_date = models.DateTimeField(auto_now_add=True)
+    payment_method = models.CharField(max_length=10)
+    reference_number = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.student} - {self.amount_paid} on {self.payment_date} though {self.payment_method}"
+
+class Grade(models.Model):
+    enrollment = models.OneToOneField('Enrollment', on_delete=models.CASCADE)
+    grade = models.CharField(max_length=2)
+    marks = models.DecimalField(max_digits=3, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.enrollment} - {self.grade}"
+    
+class Timetable(models.Model):
+    unit = models.ForeignKey('Unit', on_delete=models.CASCADE)
+    day_of_the_week = models.CharField(max_length=10)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    venue = models.CharField(max_length=6) 
+
+    def __str__(self):
+        return f"{self.unit} - {self.day_of_the_week} - {self.start_time} - {self.end_time}"
