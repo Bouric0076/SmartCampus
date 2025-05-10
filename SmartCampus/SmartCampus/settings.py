@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Smartcampus',  # Your database name
         'USER': 'root',             # Your MySQL username
-        'PASSWORD': 'Sandraenos2005',# Your MySQL password
+        'PASSWORD': 'Carlyenos20 05',# Your MySQL password
         'HOST': '127.0.0.1',        # Database server address
         'PORT': '3306',             # MySQL default port
         'OPTIONS': {
@@ -87,7 +87,7 @@ DATABASES = {
         },
     }
 }
-pbd-aznq-mhm
+
 
 
 
