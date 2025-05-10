@@ -5,10 +5,11 @@ from admins.models import Course, Unit
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reg_no = models.CharField(max_length=20, unique=True)
-    year_of_study = models.PositiveIntegerField()
-    Course = models.ForeignKey('Course', on_delete=models.SET_NULL, null=True)
+    unit = models.ForeignKey('Unit', on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
+    profile_pic= models.ImageField(upload_to='students/', default=students/default.jpg, blank=True, null=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.reg_no}"
@@ -29,9 +30,6 @@ class FeePayment(models.Model):
     payment_date = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=10)
     reference_number = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return f"{self.student} - {self.amount_paid} on {self.payment_date} though {self.payment_method}"
 
 class Grade(models.Model):
     enrollment = models.OneToOneField('Enrollment', on_delete=models.CASCADE)
