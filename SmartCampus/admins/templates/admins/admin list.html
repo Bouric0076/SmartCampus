@@ -1,0 +1,7 @@
+<!-- filepath: admins/templates/admins/admin_list.html -->
+<h1>Admin List</h1>
+<ul>
+    {% for admin in admins %}
+        <li><a href="{{ admin.id }}/">{{ admin.user.username }}</a></li>
+    {% endfor %}
+</ul>
