@@ -5,7 +5,7 @@ from admins.models import Course, Unit
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reg_no = models.CharField(max_length=20, unique=True)
-    Course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
     profile_pic= models.ImageField(upload_to='student/', default='student/default.jpg', blank=True, null=True)
@@ -18,11 +18,11 @@ class StudentProfile(models.Model):
 
 class Enrollment(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-    Unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     class Meta:
-        unique_together =('student','Unit')
+        unique_together =('student','unit')
     def __str__(self):
-        return f"{self.student} - {self.Unit}"
+        return f"{self.student} - {self.unit}"
     
 class FeePayment(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)

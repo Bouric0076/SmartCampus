@@ -1,0 +1,33 @@
+{% extends 'admins/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Units</h2>
+    <a href="{% url 'unit_create' %}" class="btn btn-primary mb-3">Add New Unit</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Name</th>
+                <th>Unit Code</th>
+                <th>Lecture Hours</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit in units %}
+            <tr>
+                <td>{{ unit.course.name }}</td>
+                <td>{{ unit.name }}</td>
+                <td>{{ unit.unit_code }}</td>
+                <td>{{ unit.lecture_hours }}</td>
+                <td>
+                    <a href="{% url 'unit_update' unit.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'unit_delete' unit.pk %}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ unit.pk }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'admins/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Timetables</h2>
+    <a href="{% url 'timetable_create' %}" class="btn btn-primary mb-3">Create Timetable</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Unit</th>
+                <th>Day of the Week</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Venue</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for timetable in timetables %}
+            <tr>
+                <td>{{ timetable.unit.name }}</td>
+                <td>{{ timetable.day_of_the_week }}</td>
+                <td>{{ timetable.start_time }}</td>
+                <td>{{ timetable.end_time }}</td>
+                <td>{{ timetable.venue }}</td>
+                <td>
+                    <a href="{% url 'timetable_update' timetable.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'timetable_delete' timetable.pk %}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ timetable.pk }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

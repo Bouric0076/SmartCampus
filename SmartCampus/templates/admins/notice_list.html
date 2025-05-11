@@ -1,0 +1,29 @@
+{% extends 'admins/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Notices</h2>
+    <a href="{% url 'notice_create' %}" class="btn btn-primary mb-3">Post New Notice</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date Posted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for notice in notices %}
+            <tr>
+                <td>{{ notice.title }}</td>
+                <td>{{ notice.date_posted }}</td>
+                <td>
+                    <a href="{% url 'notice_update' notice.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'notice_delete' notice.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
