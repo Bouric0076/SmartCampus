@@ -12,16 +12,24 @@ from .forms import CourseForm, UnitForm, NoticeForm, EventForm, AdminProfileForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Count
 import json
+from django.core.exceptions import ObjectDoesNotExist
 
 # Utility to check if user is admin (customize as needed)
 def is_admin(user):
     return user.is_staff or hasattr(user, 'adminprofile')
 
 
+# --- DASHBOARD VIEW ---
 
 def admin_dashboard(request):
     if not request.user.is_staff:
         return redirect('home')
+
+    # Ensure AdminProfile exists
+    try:
+        profile = AdminProfile.objects.get(user=request.user)
+    except AdminProfile.DoesNotExist:
+        profile = AdminProfile.objects.create(user=request.user)
 
     # Units per course
     course_unit_data = Course.objects.annotate(unit_count=Count('unit'))
@@ -40,7 +48,7 @@ def admin_dashboard(request):
         'event_count': Event.objects.count(),
         'notice_count': Notice.objects.count(),
         'timetable_count': Timetable.objects.count(),
-        'profile': AdminProfile.objects.get(user=request.user),
+        'profile': profile,  # pass the created/fetched profile
 
         # chart data
         'course_names': json.dumps(course_names),
@@ -48,7 +56,7 @@ def admin_dashboard(request):
         'timetable_days': json.dumps(days),
         'timetable_counts': json.dumps(timetable_distribution),
     }
-    return render(request, 'admin/dashboard.html', context)
+    return render(request, 'admins/dashboard.html', context)
 
 # --- COURSE VIEWS ---
 

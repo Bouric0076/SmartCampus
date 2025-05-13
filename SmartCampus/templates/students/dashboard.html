@@ -62,7 +62,7 @@
         <h2 class="text-xl font-bold text-blue-700 mb-4">Current Enrollments</h2>
         <ul class="list-disc pl-5 space-y-1">
           {% for enrollment in enrollments %}
-            <li>{{ enrollment.unit.name }} ({{ enrollment.unit.code }})</li>
+            <li>{{ enrollment.unit.name }} ({{ enrollment.unit.unit_code }})</li>
           {% empty %}
             <p class="text-gray-500">No enrollments available.</p>
           {% endfor %}
@@ -83,7 +83,7 @@
             {% for grade in grades %}
               <tr class="border-t">
                 <td class="py-2">{{ grade.enrollment.unit.name }}</td>
-                <td class="py-2 font-bold text-green-700">{{ grade.score }}</td>
+                <td class="py-2 font-bold text-green-700">{{ grade.grade }}</td>
               </tr>
             {% empty %}
               <tr><td colspan="2" class="text-gray-500 py-2">No grades recorded.</td></tr>
@@ -101,7 +101,7 @@
         <ul class="space-y-1">
           {% for slot in timetable %}
             <li class="flex justify-between">
-              <span>{{ slot.day }}: {{ slot.unit.name }}</span>
+              <span>{{ slot.day_of_the_week }}: {{ slot.unit.name }}</span>
               <span class="text-sm text-gray-600">{{ slot.start_time }} - {{ slot.end_time }}</span>
             </li>
           {% empty %}

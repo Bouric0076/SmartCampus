@@ -34,7 +34,7 @@ class FeePayment(models.Model):
 class Grade(models.Model):
     enrollment = models.OneToOneField(Enrollment, on_delete=models.CASCADE)
     grade = models.CharField(max_length=2)
-    marks = models.DecimalField(max_digits=3, decimal_places=2)
+    marks = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f"{self.enrollment} - {self.grade}"

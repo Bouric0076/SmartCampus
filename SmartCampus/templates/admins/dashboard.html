@@ -1,0 +1,78 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-primary">Welcome, {{ request.user.first_name|default:request.user.username }}</h2>
+            <p class="text-muted">Admin Dashboard Overview</p>
+        </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-left-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Courses</h5>
+                    <p class="card-text"><strong>{{ courses_count }}</strong></p>
+                    <a href="{% url 'course_list' %}" class="btn btn-sm btn-outline-primary">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-left-success">
+                <div class="card-body">
+                    <h5 class="card-title">Units</h5>
+                    <p class="card-text"><strong>{{ units_count }}</strong></p>
+                    <a href="{% url 'unit_list' %}" class="btn btn-sm btn-outline-success">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-left-info">
+                <div class="card-body">
+                    <h5 class="card-title">Notices</h5>
+                    <p class="card-text"><strong>{{ notices_count }}</strong></p>
+                    <a href="{% url 'notice_list' %}" class="btn btn-sm btn-outline-info">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm border-left-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Events</h5>
+                    <p class="card-text"><strong>{{ events_count }}</strong></p>
+                    <a href="{% url 'event_list' %}" class="btn btn-sm btn-outline-warning">Manage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timetable Section -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Timetable</div>
+                <div class="card-body">
+                    <a href="{% url 'timetable_list' %}" class="btn btn-outline-primary">Manage Timetables</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Profile -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">Admin Profile</div>
+                <div class="card-body text-center">
+                    <img src="{{ AdminProfile.profile_pic.url }}" alt="Profile Picture" class="rounded-circle" width="80" height="80">
+                    <h5 class="mt-2">{{ request.user.username }}</h5>
+                    <p class="text-muted">{{ AdminProfile.phone_number }}</p>
+                    <a href="{% url 'admin_profile' %}" class="btn btn-sm btn-outline-secondary">Update Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+
+from admins.models import Course
 from .models import StudentProfile, Enrollment, FeePayment, Grade, Timetable
 
 
@@ -16,7 +18,7 @@ def register(request):
         reg_no = request.POST['reg_no']
         date_of_birth = request.POST['date_of_birth']
         phone_number = request.POST['phone_number']
-        # course_id = request.POST['course'] 
+        course_id = request.POST['course'] 
 
         # Check if username exists
         if User.objects.filter(username=username).exists():
@@ -29,29 +31,25 @@ def register(request):
         user.last_name = last_name
         user.save()
 
-        # Fetch course
-      #  try:
-        #    course = Course.objects.get(id=course_id)
-        # except Course.DoesNotExist:
-         #   messages.error(request, 'Selected course does not exist.')
-         #   user.delete()  # cleanup the created user if course invalid
-          #  return render(request, 'students/register.html')
-
-        # Create profile
-        student_profile = StudentProfile.objects.create(
-            user=user,
-            reg_no=reg_no,
-            date_of_birth=date_of_birth,
-            phone_number=phone_number,
-            # course=course
-        )
-        student_profile.save()
-        messages.success(request, 'Registration successful. You can now log in.')
-
-
-        return redirect('login')
-    else:
+    # Fetch course
+    try:
+        course = Course.objects.get(id=course_id)
+    except Course.DoesNotExist:
+        messages.error(request, 'Selected course does not exist.')
+        user.delete()  # cleanup the created user if course invalid
         return render(request, 'students/register.html')
+
+    # Create profile
+    student_profile = StudentProfile.objects.create(
+        user=user,
+        reg_no=reg_no,
+        date_of_birth=date_of_birth,
+        phone_number=phone_number,
+        course=course
+    )
+    student_profile.save()
+    messages.success(request, 'Registration successful. You can now log in.')
+    return redirect('login')
     
 
 @login_required
@@ -62,7 +60,7 @@ def profile(request):
 @login_required
 def dashboard(request):
     if request.user.is_staff:
-        return redirect('/admins/')
+        return redirect('admin_dashboard')  # Redirect to admin dashboard if user is staff
     else:
         student_profile = StudentProfile.objects.get(user=request.user)
         enrollments = Enrollment.objects.filter(student=student_profile)
